@@ -1,0 +1,19 @@
+version: "3.2"
+
+services:
+  api:
+    build: ./images/api
+    ports:
+      - 8080:3000
+    volumes:
+      - ./images/api/src: /usr/app/src
+
+  store:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER:
+      - POSTGRES_PASSWORD:
+      - POSTGRES_DB:
+      - POSTGRES_HOSTY_AUTH_METHOD:
