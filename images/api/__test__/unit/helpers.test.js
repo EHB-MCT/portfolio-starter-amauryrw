@@ -1,4 +1,6 @@
-const { checkStudentPostEndpoint } = require("../src/helpers/endpointHelpers");
+const {
+  checkStudentPostEndpoint,
+} = require("../../src/helpers/endpointHelpers");
 
 /**table.uuid("UUID");
     table.string("name");
