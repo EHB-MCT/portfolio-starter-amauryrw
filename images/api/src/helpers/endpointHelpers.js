@@ -18,9 +18,24 @@ function checkStudentName(name) {
   return true;
 }
 
+function isValidStudentAge(age){
+  if (typeof age === "number" && age >= 17 && age <= 99) {
+    return true;
+  }
+  return false;
+}
 
+function checkClassGroup(classGroup) {
+  if (
+    typeof classGroup !== "string" ||
+    !/^[AaBbCc][0-9]{3}$/.test(classGroup)
+  ) {
+    return false;
+  }
+  return true;
+}
 
 module.exports = {
-  checkStudentName,
- 
+  checkStudentName,isValidStudentAge,checkClassGroup
+
 };
