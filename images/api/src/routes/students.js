@@ -1,4 +1,4 @@
-const { checkStudentName } = require("../helpers/endpointHelpers");
+const { checkStudentName, isValidStudentAge } = require("../helpers/endpointHelpers");
 
 /**
  * @param id (integer): Unique identifier for the student.
@@ -20,7 +20,7 @@ function initEndpoints(app, db) {
    */
   app.post("/students", async (req, res) => {
     const student = req.body;
-    if (checkStudentName(student.name)) {
+    if (checkStudentName(student.name)&& isValidStudentAge(student.age) && checkClassGroup(student.classgroup)) {
       db("students")
         .insert(student)
         .returning("*")
@@ -31,7 +31,7 @@ function initEndpoints(app, db) {
           res.status(500).json({ error: err });
         });
     } else {
-      res.status(401).send({ message: "name not formatted correctly" });
+      res.status(401).send({ message: "name or age not correct or formatted correctly" });
     }
   });
 
