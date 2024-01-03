@@ -35,11 +35,7 @@ function initEndpoints(app, db) {
     }
   });
 
-  /**
-   * GET /students
-   * This route retrieves a list of all students from the database.
-   * It returns a JSON array containing student records if successful.
-   */
+ 
   app.get("/students", async (req, res) => {
     db("students")
       .join("classes", "classes.class", "students.classgroup")
@@ -54,15 +50,10 @@ function initEndpoints(app, db) {
       });
   });
 
-  /**
-   * GET /students/:id
-   * This route retrieves a specific student's information from the database based on the provided ID.
-   * It expects the student's ID as a parameter in the URL.
-   * If the student is found, it returns the student's information as JSON.
-   * If the student is not found, it returns a 404 Not Found error.
-   */
+
   app.get("/students/:id", async (req, res) => {
-    const studentId = req.params.id;
+    const id = req.params.id;
+    if(id>=0 && typeof(id) == 'number'){
     db("students")
       .where({ id: studentId })
       .first()
@@ -79,6 +70,9 @@ function initEndpoints(app, db) {
           .status(500)
           .json({ error: "An error occurred while fetching student." });
       });
+    }else{
+      res.status(401).json({error : "negative id is provided"})
+    }
   });
 }
 
