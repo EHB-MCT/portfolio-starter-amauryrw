@@ -17,7 +17,6 @@ describe('GET /students/:id', () => {
 
   test('should return the correct student record', async () => {
     const studentId = 11;
-
     const response = await request(app).get(`/students/${studentId}`);
 
     expect(response.status).toBe(200);
@@ -39,6 +38,12 @@ describe('GET /students/:id', () => {
 
   test('should return 401 for negative studentID', async ()=>{
     const nonExistingStudentId = -15;
+    const response = await request (app).get(`/students/${nonExistingStudentId}`)
+    expect(response.status).toBe(401);
+  });
+
+  test('should return 401 for to large studentID', async ()=>{
+    const nonExistingStudentId = 88888;
     const response = await request (app).get(`/students/${nonExistingStudentId}`)
     expect(response.status).toBe(401);
   });
