@@ -1,10 +1,10 @@
 # My API
 
-Brief project description goes here.
+The Student Management System is a solution for managing student records and associated class information. This system provides a user-friendly interface to create, retrieve, and delete student records while enforcing data integrity through validation checks.
 
 ## Purpose
 
-The API is written in Nodejs and is designed to assist teachers in obtaining an overview of their students. Additionally, it provides the flexibility to integrate with badging solutions and more.
+The API is written in Nodejs and is designed to assist teachers in obtaining an overview of their students their grades and classrooms. Additionally, it provides the flexibility to integrate with badging solutions and more.
 
 ## Quick Start
 
