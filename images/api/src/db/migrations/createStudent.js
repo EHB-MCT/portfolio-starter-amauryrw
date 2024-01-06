@@ -5,13 +5,13 @@
 
 exports.up = function (knex) {
   return knex.schema.createTable("api", function (table) {
-    table.increments("id").primary(); // Using UUID as the primary key
+    table.increments("id").primary(); 
     table.uuid("UUID");
     table.string("name");
     table.integer("age");
-    table.string("classgroup"); // Class group information
-    table.double("grade"); // Student's grade information
-    table.timestamps(true, true); // Adds created_at and updated_at columns
+    table.string("classgroup"); 
+    table.double("grade"); 
+    table.timestamps(true, true); 
   });
 };
 

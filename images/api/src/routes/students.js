@@ -1,4 +1,4 @@
-const { checkStudentName, isValidStudentAge } = require("../helpers/endpointHelpers");
+const { checkStudentName, isValidStudentAge , checkStudentGrade, checkClassGroup} = require("../helpers/endpointHelpers");
 
 
 /**
@@ -47,8 +47,6 @@ function initEndpoints(app, db) {
  * @returns (Object)   - JSON response containing an array of student objects.
  *                     - Each student object includes information about the student and the associated class.
  */
-
-
   app.get("/students", async (req, res) => {
     db("students")
       .join("classes", "classes.class", "students.classgroup")
@@ -63,6 +61,7 @@ function initEndpoints(app, db) {
       });
   });
 
+
  /**
    * GET /students/:id
    * Description: Fetches a specific student by ID.
@@ -70,8 +69,6 @@ function initEndpoints(app, db) {
    * @param {object} res - The HTTP response object.
    * @returns {object} JSON response containing the student with the specified ID or an error message.
    */
-
-
   app.get("/students/:id", async (req, res) => {
     const id = req.params.id;
     if(id>=0 && typeof(id) == 'number' && id < 88888){
@@ -115,6 +112,7 @@ function initEndpoints(app, db) {
     res.status(200).json({ message: "Student deleted successfully" });
   });
 
+
   /**
    * DELETE /classrooms/:class
    * Description: Deletes a specific classroom and associated students by class name.
@@ -134,6 +132,51 @@ function initEndpoints(app, db) {
     res.status(200).json({ message: "Classroom and associated students deleted successfully" });
   });
 
+
+  /**
+     * POST /students/:id/grade
+     * Description: Adds or updates the grade for a specific student by ID.
+     * @param {object} req - The HTTP request object.
+     * @param {number} req.body.grade - The new grade for the student.
+     * @param {object} res - The HTTP response object.
+     * @returns {object} JSON response with either the updated student or an error message.
+     */
+  app.post("/students/:id/grade", async (req, res) => {
+    const studentId = req.params.id;
+    const newGrade = req.body.grade;
+
+    if (!checkStudentGrade(newGrade)) {
+      return res.status(401).json({ message: "Invalid grade provided" });
+    }
+
+    const existingStudent = await db("students").select("*").where("id", studentId).first();
+    if (!existingStudent) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    await db("students").where("id", studentId).update({ grade: newGrade, updated_at: new Date() });
+    const updatedStudent = await db("students").where("id", studentId).first();
+    res.status(200).json(updatedStudent);
+  });
+
+
+  /**
+   * GET /students/:id/grade
+   * Description: Fetches the grade for a specific student by ID.
+   * @param {object} req - The HTTP request object.
+   * @param {object} res - The HTTP response object.
+   * @returns {object} JSON response containing the grade of the student or an error message.
+   */
+  app.get("/students/:id/grade", async (req, res) => {
+    const studentId = req.params.id;
+
+    const existingStudent = await db("students").select("*").where("id", studentId).first();
+    if (!existingStudent) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+    res.status(200).json({ grade: existingStudent.grade });
+  });
+  
 }
 
 module.exports = initEndpoints;

@@ -35,7 +35,15 @@ function checkClassGroup(classGroup) {
   return true;
 }
 
+
+function checkStudentGrade(grade) {
+  if (typeof grade === "number" && grade >= 0 && grade <= 20) {
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
-  checkStudentName,isValidStudentAge,checkClassGroup
+  checkStudentName,isValidStudentAge,checkClassGroup,checkStudentGrade
 
 };
