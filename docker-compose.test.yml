@@ -1,0 +1,7 @@
+version: "3.2"
+
+services:
+  api:
+    environment:
+      - NODE_ENV=test
+    command: ["npm", "test"]

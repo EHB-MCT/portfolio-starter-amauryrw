@@ -1,22 +1,24 @@
 const { checkStudentName, isValidStudentAge } = require("../helpers/endpointHelpers");
 
+
 /**
- * @param id (integer): Unique identifier for the student.
- * @param name (string): Name of the student.
- * @param age (integer): Age of the student.
- * @param classgroup (string): Class group information for the student.
- * @param grade (double): Grade information for the student.
- * @param created_at (string): Timestamp of when the student record was created.
- * @param updated_at (string): Timestamp of when the student record was updated.
+ * @param {integer} id - Unique identifier for the student.
+ * @param {string} name - Name of the student.
+ * @param {integer} age - Age of the student.
+ * @param {string} classgroup - Class group information for the student.
+ * @param {double} grade - Grade information for the student.
+ * @param {string} created_at - Timestamp of when the student record was created.
+ * @param {string} updated_at - Timestamp of when the student record was updated.
  */
 
 function initEndpoints(app, db) {
   /**
    * POST /students
-   * @param (object) req - The HTTP request object.
-   * @param (Student) req.body - the HTTP request body contains the student
-   * @param (object) res - The HTTP response object.
-   * @returns (object) JSON response with either the newly created student or an error message.
+   * Description: Creates a new student record.
+   * @param {object} req - The HTTP request object.
+   * @param {Student} req.body - The HTTP request body contains the student.
+   * @param {object} res - The HTTP response object.
+   * @returns {object} JSON response with either the newly created student or an error message.
    */
   app.post("/students", async (req, res) => {
     const student = req.body;
@@ -36,6 +38,17 @@ function initEndpoints(app, db) {
   });
 
  
+/**
+ * Endpoint: GET /students
+ * Description: Fetches a list of students along with their associated class information.
+ * 
+ * @param (Object) req - Express request object (not used in this endpoint).
+ * @param (Object) res - Express response object.
+ * @returns (Object)   - JSON response containing an array of student objects.
+ *                     - Each student object includes information about the student and the associated class.
+ */
+
+
   app.get("/students", async (req, res) => {
     db("students")
       .join("classes", "classes.class", "students.classgroup")
@@ -49,6 +62,14 @@ function initEndpoints(app, db) {
           .json({ error: "An error occurred while fetching students." });
       });
   });
+
+ /**
+   * GET /students/:id
+   * Description: Fetches a specific student by ID.
+   * @param {object} req - The HTTP request object.
+   * @param {object} res - The HTTP response object.
+   * @returns {object} JSON response containing the student with the specified ID or an error message.
+   */
 
 
   app.get("/students/:id", async (req, res) => {
@@ -78,6 +99,7 @@ function initEndpoints(app, db) {
 
   /**
    * DELETE /students/:id
+   * Description: Deletes a specific student by ID.
    * @param (object) req - The HTTP request object.
    * @param (object) res - The HTTP response object.
    * @returns (object) JSON response indicating success or failure.
@@ -95,6 +117,7 @@ function initEndpoints(app, db) {
 
   /**
    * DELETE /classrooms/:class
+   * Description: Deletes a specific classroom and associated students by class name.
    * @param (object) req - The HTTP request object.
    * @param (object) res - The HTTP response object.
    * @returns (object) JSON response indicating success or failure.
