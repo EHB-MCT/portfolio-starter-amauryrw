@@ -9,17 +9,14 @@ describe('DELETE /classrooms/:class', () => {
         const sampleClassroom = {
             class: 'TEST101',
         };
-
         const insertedClassroom = await db('classes').insert(sampleClassroom).returning('*');
         sampleClassroom.id = insertedClassroom[0].id; 
-
         const sampleStudent = {
             name: 'StudentToDelete',
             age: 21,
             classgroup: sampleClassroom.class,
             grade: 15,
         };
-
         await db('students').insert(sampleStudent);
     });
 

@@ -9,6 +9,11 @@ RUN npm install --quiet
 
 RUN npm install -g nodemon
 
+RUN npm install -g knex
+
+
 COPY ./ ./ 
 
 CMD ["npm", "start"]
+
+

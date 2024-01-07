@@ -1,16 +1,14 @@
-// Update with your config settings.
 
 /**
- * @type { Object.<string, import("knex").Knex.Config> }
+ * @type {Object.<string, import("knex").Knex.Config>}
  */
 module.exports = {
   development: {
     client: "pg",
     connection: {
-      host: "localhost",
-      user: "your_username",
-      password: "your_password",
-      database: "your_database",
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
     },
     migrations: {
       tableName: "knex_migrations",
@@ -20,5 +18,4 @@ module.exports = {
       directory: "./seeds",
     },
   },
-
 };

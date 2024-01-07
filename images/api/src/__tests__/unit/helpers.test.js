@@ -8,7 +8,6 @@ test("check name", () => {
   expect(checkStudentName("amaury")).toBe(true);
   expect(checkStudentName("amaury rauw")).toBe(true);
   expect(checkStudentName("toolongstudentnameforvalidation")).toBe(false); 
-
 });
 
 
